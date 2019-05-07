@@ -3,6 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { AddPostComponent } from './components/add-post/add-post.component';
 import { EditPostComponent } from './components/edit-post/edit-post.component';
+import { UsersListComponent } from './components/users-list/users-list.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
+import { UserRolesListComponent } from './components/user-roles-list/user-roles-list.component';
+import { CategoriesListComponent } from './components/categories-list/categories-list.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 const routes: Routes = [
   {
@@ -16,6 +21,26 @@ const routes: Routes = [
   {
     path: 'edit-post',
     component: EditPostComponent
+  },
+  {
+    path: 'users',
+    component: UsersListComponent
+  },
+  {
+    path: 'create-user',
+    component: CreateUserComponent
+  },
+  {
+    path: 'edit-user',
+    component: EditUserComponent
+  },
+  {
+    path: 'user-roles',
+    component: UserRolesListComponent
+  },
+  {
+    path: 'categories',
+    component: CategoriesListComponent
   }
 ];
 
