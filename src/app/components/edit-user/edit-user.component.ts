@@ -18,6 +18,7 @@ export class EditUserComponent implements OnInit {
   submitted: boolean = false;
   user: User;
   userRoles: UserRoles;
+  username: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,6 +55,7 @@ export class EditUserComponent implements OnInit {
         this.userId = userId;
         this.userService.getUser(userId).subscribe((user: User) => {
           user.userRol = user.userRol;
+          this.username = user.username;
           this.editForm.patchValue(user);
         })
       })

@@ -1,6 +1,6 @@
 <section class="section">
   <div class="container">
-    <h1 class="title">Updating User #{{ username }}</h1>
+    <h1 class="title">Updating User @{{ username }}</h1>
     <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
       <div class="field">
         <label class="label">Name</label>
@@ -19,7 +19,7 @@
       <div class="field">
         <label class="label">Username</label>
         <div class="control has-icons-left has-icons-right">
-          <input class="input" type="text" placeholder="username" formControlName="username" [ngClass]="{ 'is-danger': submitted && f.username.errors }">
+          <input class="input" type="text" placeholder="username" formControlName="username" [ngClass]="{ 'is-danger': submitted && f.username.errors }" [attr.disabled]="true">
         </div>
         <p class="help is-danger" *ngIf="submitted && f.username.errors">Username is required</p>
       </div>
