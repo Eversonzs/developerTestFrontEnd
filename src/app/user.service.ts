@@ -17,4 +17,8 @@ export class UserService {
     return this.http.get(`${this.apiUrl}/user/${userId}`);
   }
 
+  editUser(data){
+    return this.http.put(`${this.apiUrl}/user/${data.id}`, data);
+  }
+
 }
