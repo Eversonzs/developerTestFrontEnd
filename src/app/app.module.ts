@@ -18,6 +18,8 @@ import { UsersListComponent } from './components/users-list/users-list.component
 import { UserRolesListComponent } from './components/user-roles-list/user-roles-list.component';
 import { CategoriesListComponent } from './components/categories-list/categories-list.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { CreateCategoryComponent } from './components/create-category/create-category.component';
+import { EditCategoryComponent } from './components/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     UsersListComponent,
     UserRolesListComponent,
     CategoriesListComponent,
-    EditUserComponent
+    EditUserComponent,
+    CreateCategoryComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,

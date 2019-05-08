@@ -50,7 +50,7 @@ export class EditUserComponent implements OnInit {
       .subscribe(params => {
         let userId = params['userId'];
         if(!userId){
-          this.router.navigate(['']);
+          this.router.navigate(['/users']);
         }
         this.userId = userId;
         this.userService.getUser(userId).subscribe((user: User) => {

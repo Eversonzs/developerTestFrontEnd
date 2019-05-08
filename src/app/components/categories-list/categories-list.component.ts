@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from 'src/app/models/Category';
+import { CategoryService } from 'src/app/category.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories-list',
@@ -6,10 +9,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./categories-list.component.scss']
 })
 export class CategoriesListComponent implements OnInit {
+  categories: Category[];
 
-  constructor() { }
+  constructor(
+    private categoryService: CategoryService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.categoryService.getCategories().subscribe( (categories: Category[]) => {
+      this.categories = categories;
+    })
+  }
+
+  editCategory(categoryId){
+    this.router.navigate(['/edit-category'], { queryParams: { categoryId: categoryId } });
+  }
+
+  deleteCategory(categoryId){
+    this.categoryService.deleteCategory(categoryId).subscribe( () =>{
+      const categoryIndex = this.categories.findIndex((category) => category.id === categoryId);
+      this.categories.splice(categoryIndex, 1);
+    })
   }
 
 }

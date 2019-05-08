@@ -8,6 +8,8 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
 import { UserRolesListComponent } from './components/user-roles-list/user-roles-list.component';
 import { CategoriesListComponent } from './components/categories-list/categories-list.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { CreateCategoryComponent } from './components/create-category/create-category.component';
+import { EditCategoryComponent } from './components/edit-category/edit-category.component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
   {
     path: 'categories',
     component: CategoriesListComponent
+  },
+  {
+    path: 'create-category',
+    component: CreateCategoryComponent
+  },
+  {
+    path: 'edit-category',
+    component: EditCategoryComponent
   }
 ];
 
