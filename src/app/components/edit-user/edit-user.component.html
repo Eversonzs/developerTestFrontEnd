@@ -26,7 +26,7 @@
       <div class="field">
         <label class="label">Email</label>
         <div class="control has-icons-left has-icons-right">
-          <input class="input" type="text" placeholder="email" formControlName="email" [ngClass]="{ 'is-danger': submitted && f.email.errors }">
+          <input class="input" type="email" placeholder="email" formControlName="email" [ngClass]="{ 'is-danger': submitted && f.email.errors }">
         </div>
         <p class="help is-danger" *ngIf="submitted && f.email.errors">Email is required</p>
       </div>
