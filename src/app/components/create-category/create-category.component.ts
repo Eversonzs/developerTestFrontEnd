@@ -21,10 +21,16 @@ export class CreateCategoryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.data.changeTitle("Create a new category")
-    this.createForm = this.formBuilder.group({
-      name: ['', Validators.required]
-    });
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged == "viewer"){
+      alert("You are a viewer user, you don't have grants to create categories.");
+      this.router.navigate(['/categories']);
+    }else{
+      this.data.changeTitle("Create a new category")
+      this.createForm = this.formBuilder.group({
+        name: ['', Validators.required]
+      });
+    }
   }
 
   onSubmit(){

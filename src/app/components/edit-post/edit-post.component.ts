@@ -6,6 +6,7 @@ import { Post } from 'src/app/models/Post';
 import { PostService } from 'src/app/post.service';
 import { CategoryService } from 'src/app/category.service';
 import { Category } from 'src/app/models/Category';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-edit-post',
@@ -29,44 +30,55 @@ export class EditPostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.data.changeTitle("Edit Post")
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged == "viewer"){
+      alert("You are a viewer user, you don't have grants to edit post.");
+      this.router.navigate(['']);
+    }else{
+      this.data.changeTitle("Edit Post")
 
-    this.categoryService.getCategories().subscribe((data: Category[]) => {
-      this.categories = data;
-    });
-
-    this.editForm = this.formBuilder.group({
-      id: [],
-      title: ['', Validators.required],
-      text: ['', Validators.required],
-      categories: ['', Validators.required]
-    });
-
-    this.route.queryParams
-      .subscribe(params => {
-        let postId = params['postId'];
-        if (!postId) {
-          this.router.navigate(['']);
-        }
-        this.postId = postId;
-        this.postService.getPost(postId).subscribe( (post: Post) => {
-          post.categories = post.categories.map( (category: Category) => {
-            return category.id;
-          })
-          this.editForm.patchValue(post);
-        })
+      this.categoryService.getCategories().subscribe((data: Category[]) => {
+        this.categories = data;
       });
+
+      this.editForm = this.formBuilder.group({
+        id: [],
+        title: ['', Validators.required],
+        text: ['', Validators.required],
+        categories: ['', Validators.required]
+      });
+
+      this.route.queryParams
+        .subscribe(params => {
+          let postId = params['postId'];
+          if (!postId) {
+            this.router.navigate(['']);
+          }
+          this.postId = postId;
+          this.postService.getPost(postId).subscribe( (post: Post) => {
+            post.categories = post.categories.map( (category: Category) => {
+              return category.id;
+            })
+            this.editForm.patchValue(post);
+          })
+        });
+      }
   }
 
   onSubmit(){
     this.submitted = true;
-    console.log(this.editForm.value)
     
     if(this.editForm.valid){
-      this.postService.editPost(this.editForm.value)
-      .subscribe( data => {
+      let userRolLogged = localStorage.getItem('userRol');
+      if(userRolLogged == "admin" || userRolLogged == "editor"){
+        this.postService.editPost(this.editForm.value)
+        .subscribe( data => {
+          this.router.navigate(['']);
+        });
+      }else{
+        alert("You are a viewer user, you don't have grants to edit post.");
         this.router.navigate(['']);
-      });
+      }
     }
   }
 

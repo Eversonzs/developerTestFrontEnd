@@ -30,35 +30,41 @@ export class EditUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.data.changeTitle("Edit user")
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged != "admin"){
+      alert("Only admins have access to edit users.");
+      this.router.navigate(['']);
+    }else{
+      this.data.changeTitle("Edit user")
 
-    this.userRolesService.getUserRoles().subscribe((data: UserRoles) => {
-      this.userRoles = data;
-    })
-
-    this.editForm = this.formBuilder.group({
-      id: [],
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      username: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      userRol: ['', Validators.required],
-    });
-
-    this.route.queryParams
-      .subscribe(params => {
-        let userId = params['userId'];
-        if(!userId){
-          this.router.navigate(['/users']);
-        }
-        this.userId = userId;
-        this.userService.getUser(userId).subscribe((user: User) => {
-          user.userRol = user.userRol;
-          this.username = user.username;
-          this.editForm.patchValue(user);
-        })
+      this.userRolesService.getUserRoles().subscribe((data: UserRoles) => {
+        this.userRoles = data;
       })
+
+      this.editForm = this.formBuilder.group({
+        id: [],
+        name: ['', Validators.required],
+        surname: ['', Validators.required],
+        username: ['', Validators.required],
+        email: ['', Validators.required],
+        password: ['', Validators.required],
+        userRol: ['', Validators.required],
+      });
+
+      this.route.queryParams
+        .subscribe(params => {
+          let userId = params['userId'];
+          if(!userId){
+            this.router.navigate(['/users']);
+          }
+          this.userId = userId;
+          this.userService.getUser(userId).subscribe((user: User) => {
+            user.userRol = user.userRol;
+            this.username = user.username;
+            this.editForm.patchValue(user);
+          })
+        })
+      }
   }
 
   onSubmit(){

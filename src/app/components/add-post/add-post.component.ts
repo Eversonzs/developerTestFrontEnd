@@ -25,28 +25,38 @@ export class AddPostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.data.changeTitle("Add Post")
-    this.categoryService.getCategories().subscribe((data: Category[]) => {
-      this.categories = data;
-    });
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged == "viewer"){
+      alert("You are a viewer user, you don't have grants to add posts.");
+      this.router.navigate(['']);
+    }else{
+      this.data.changeTitle("Add Post")
+      this.categoryService.getCategories().subscribe((data: Category[]) => {
+        this.categories = data;
+      });
 
-    this.addForm = this.formBuilder.group({
-      id: [],
-      title: ['', Validators.required],
-      text: ['', Validators.required],
-      categories: [[], Validators.required]
-    });
+      this.addForm = this.formBuilder.group({
+        id: [],
+        title: ['', Validators.required],
+        text: ['', Validators.required],
+        categories: [[], Validators.required]
+      });
+    }
   }
 
   onSubmit(){
     this.submitted = true;
-    console.log(this.addForm.value)
-    
-    if(this.addForm.valid){
-      this.postService.addPost(this.addForm.value)
-      .subscribe( data => {
-        this.router.navigate(['']);
-      });
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged == "admin" || userRolLogged == "editor"){
+      if(this.addForm.valid){
+        this.postService.addPost(this.addForm.value)
+        .subscribe( data => {
+          this.router.navigate(['']);
+        });
+      }
+    }else{
+      alert("You are a viewer user, you don't have grants to add post.");
+      this.router.navigate(['']);
     }
   }
 

@@ -27,10 +27,16 @@ export class CategoriesListComponent implements OnInit {
   }
 
   deleteCategory(categoryId){
-    this.categoryService.deleteCategory(categoryId).subscribe( () =>{
-      const categoryIndex = this.categories.findIndex((category) => category.id === categoryId);
-      this.categories.splice(categoryIndex, 1);
-    })
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged == "viewer"){
+      alert("You are a viewer user, you don't have grants to delete categories.");
+      this.router.navigate(['/categories']);
+    }else{
+      this.categoryService.deleteCategory(categoryId).subscribe( () =>{
+        const categoryIndex = this.categories.findIndex((category) => category.id === categoryId);
+        this.categories.splice(categoryIndex, 1);
+      })
+    }
   }
 
 }

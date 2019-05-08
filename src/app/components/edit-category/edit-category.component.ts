@@ -25,34 +25,45 @@ export class EditCategoryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.data.changeTitle("Edit Category")
-    
-    this.editForm = this.formBuilder.group({
-      id: [],
-      name: ['', Validators.required]
-    });
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged == "viewer"){
+      alert("You are a viewer user, you don't have grants to edit categories.");
+      this.router.navigate(['/categories']);
+    }else{
+      this.data.changeTitle("Edit Category")
+      
+      this.editForm = this.formBuilder.group({
+        id: [],
+        name: ['', Validators.required]
+      });
 
-    this.route.queryParams
-    .subscribe(params => {
-      let categoryId = params['categoryId'];
-      if(!categoryId){
-        this.router.navigate(['/categories'])
-      }
-      this.categoryId = categoryId;
-      this.categoryService.getCategory(categoryId).subscribe( (category: Category) => {
-        this.editForm.patchValue(category);
+      this.route.queryParams
+      .subscribe(params => {
+        let categoryId = params['categoryId'];
+        if(!categoryId){
+          this.router.navigate(['/categories'])
+        }
+        this.categoryId = categoryId;
+        this.categoryService.getCategory(categoryId).subscribe( (category: Category) => {
+          this.editForm.patchValue(category);
+        })
       })
-    })
+    }
   }
 
   onSubmit(){
     this.submitted = true;
-    
-    if(this.editForm.valid){
-      this.categoryService.editCategory(this.editForm.value)
-      .subscribe( data => {
-        this.router.navigate(['/categories']);
-      });
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged == "admin" || userRolLogged == "editor"){
+      if(this.editForm.valid){
+        this.categoryService.editCategory(this.editForm.value)
+        .subscribe( data => {
+          this.router.navigate(['/categories']);
+        });
+      }
+    }else{
+      alert("You are a viewer user, you don't have grants to edit categories.");
+      this.router.navigate(['']);
     }
   }
 

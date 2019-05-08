@@ -26,10 +26,16 @@ export class PostsListsComponent implements OnInit {
   }
 
   deletePost(postId){
-    this.postService.deletePost(postId).subscribe( () => {
-      const postIndex = this.posts.findIndex( (post) => post.id === postId);
-      this.posts.splice(postIndex, 1);
-    });
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged == "viewer"){
+      alert("You are a viewer user, you don't have grants to delete posts.");
+      this.router.navigate(['']);
+    }else{
+      this.postService.deletePost(postId).subscribe( () => {
+        const postIndex = this.posts.findIndex( (post) => post.id === postId);
+        this.posts.splice(postIndex, 1);
+      });
+    }
   }
 
 }

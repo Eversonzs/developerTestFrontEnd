@@ -25,19 +25,25 @@ export class CreateUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.data.changeTitle("Create new User")
-    this.userRolesService.getUserRoles().subscribe((data: UserRoles) => {
-      this.userRoles = data;
-    })
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged != "admin"){
+      alert("Only admins have access to create users.");
+      this.router.navigate(['']);
+    }else{
+      this.data.changeTitle("Create new User")
+      this.userRolesService.getUserRoles().subscribe((data: UserRoles) => {
+        this.userRoles = data;
+      })
 
-    this.createForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      username: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      userRol: ['', Validators.required],
-    });
+      this.createForm = this.formBuilder.group({
+        name: ['', Validators.required],
+        surname: ['', Validators.required],
+        username: ['', Validators.required],
+        email: ['', Validators.required],
+        password: ['', Validators.required],
+        userRol: ['', Validators.required],
+      });
+    }
   }
 
   onSubmit(){

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user.service';
 import { User } from 'src/app/models/User';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-users-list',
@@ -16,9 +17,15 @@ export class UsersListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe((users: User[]) => {
-      this.users = users;
-    });
+    let userRolLogged = localStorage.getItem('userRol');
+    if(userRolLogged != "admin"){
+      alert("Only admins have access to users.");
+      this.router.navigate(['']);
+    }else{
+      this.userService.getUsers().subscribe((users: User[]) => {
+        this.users = users;
+      });
+    }
   }
 
   editUser(userId){

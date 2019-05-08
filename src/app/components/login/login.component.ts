@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid){
       this.authService.checkUserCredentials(this.loginForm.value)
       .subscribe((user: User) => {
-        console.log("user-----------", user);
         localStorage.setItem('isLoggedIn', "true");
         localStorage.setItem('token', this.token);
         localStorage.setItem('userId', user.id);
