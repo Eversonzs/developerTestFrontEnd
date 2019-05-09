@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class PostsListsComponent implements OnInit {
   posts: Post[];
+
   constructor(
     private postService: PostService,
     private router: Router

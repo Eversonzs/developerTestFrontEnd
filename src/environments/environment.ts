@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000'
+  apiUrl: 'https://vaulted-epigram-240014.appspot.com'
+  //apiUrl: 'http://localhost:3000'
 };
 
 /*

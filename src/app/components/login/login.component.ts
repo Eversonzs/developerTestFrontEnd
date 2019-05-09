@@ -48,7 +48,11 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['']);
       },
       err => {
-        alert(`Error ${err.status} , ${err.statusText}`)
+        if(err.status == 404){
+          alert(`Error user not found please check your credentials`)
+        }else{
+          alert(`Error code: ${err.status} , message: ${err.statusText}`)
+        }
       });
     }
   }
